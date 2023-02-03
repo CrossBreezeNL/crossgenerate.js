@@ -1,0 +1,22 @@
+{
+  "name": "first-poc_xgeneratejs",
+  "version": "1.0.0",
+  "description": "First proof of conceept for CrossGenerateJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CrossGenerateJS",
+    "TypeScript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.5"
+  }
+}
