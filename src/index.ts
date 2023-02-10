@@ -1,19 +1,28 @@
 const Mustache = require('mustache');
+const fs = require('fs');
 
 //Simple example model - without using JSON file
+
 const model = {
-    name: "ExampleSource"
+    system:  { name: "ExampleSource" }
 }
 
-//Simple template - without external template file
-const template = `
-    --Create Database 
-    CREATE DATABASE {{name}};
-    GO`;
+const filePath = './templates/CreateDatabase.mst'
 
-function loadTemplate(){
-      var toRender = Mustache.render(template, model);
-      console.log(toRender);
+async function loadTemplate(filePath: String): Promise<String> {
+  let output: String;
+  output = await fs.promises.readFile(filePath, 'utf8');
+  return output;
+};
+
+function parseTemplate(template : String, model: Object): String {
+    return Mustache.render(template, model);    
 }
 
-loadTemplate();
+async function getResult() {
+  let template = await loadTemplate(filePath);
+  parseTemplate(template, model)
+  console.log('result: ' + template);
+}
+
+getResult();
