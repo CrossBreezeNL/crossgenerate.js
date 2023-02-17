@@ -5,23 +5,16 @@ const { saveToFile } = require('./files');
 const templateFilePath = './templates/CreateDatabase.mst';
 const modelFilePath = './model/example-source.json';
 const outFilePath = './out/result.txt';
-async function loadTemplate(filePath) {
+//Loads file from a path.
+//Used for loading the template and model files.
+async function loadFile(filePath) {
     return await fs.promises.readFile(filePath, 'utf8');
-}
-;
-async function loadModel(filePath) {
-    return await fs.promises.readFile(filePath, 'utf8');
-}
-;
-function parseTemplate(template, model) {
-    return Mustache.render(template, model);
 }
 ;
 async function getResult() {
-    let template = await loadTemplate(templateFilePath);
-    let model = JSON.parse(await loadModel(modelFilePath));
-    saveToFile(outFilePath, parseTemplate(template, model));
-    // console.log();
+    let template = await loadFile(templateFilePath);
+    let model = JSON.parse(await loadFile(modelFilePath));
+    saveToFile(outFilePath, Mustache.render(template, model));
 }
 ;
 getResult();
