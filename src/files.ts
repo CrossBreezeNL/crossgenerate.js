@@ -1,16 +1,14 @@
 const fst = require('fs');
 
 exports.saveToFile = function saveToFile(targetPath: string, output: string): void {
-    console.log(targetPath);
-
     // Flag w+ because we want to overwite a pre-existing output
+    // This function is async, which makes it suitable for
     fst.writeFile(targetPath, output, { flag: 'w+' }, (err: Error) => {
-        if (err)
+        if (err) {
+            console.log(`Error writing to file at ${targetPath}:`);
             console.log(err);
-        else {
-            console.log("File written successfully\n");
-            console.log("The written file has the following contents:");
-            console.log(fst.readFileSync(targetPath, "utf8"));
+        } else {
+            console.log(`File written successfully ${targetPath}`);
         }
     });
 }
