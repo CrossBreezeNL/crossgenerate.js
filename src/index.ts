@@ -18,11 +18,11 @@ function parseTemplate(template : string, model: Object): string {
     return Mustache.render(template, model);
 };
 
-async function getResult() {
+async function runGenerate() {
   let template = await loadFile(templateFilePath);
   let model = JSON.parse(await loadFile(modelFilePath));
   
   saveToFile(outFilePath, parseTemplate(template, model));
 };
 
-getResult();
+runGenerate();
