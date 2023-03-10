@@ -4,7 +4,8 @@
       "internalId": "6B629DE1-5B1F-402A-B1E7-43DFC141EB57",
       "name": "ExampleSource",
       "pdObjectType": "Model",
-      "mappableObjects": [
+      "tables": 
+      [
         {
           "id": "Order",
           "internalId": "D5ADD5CF-510D-4F42-8CE0-9F850A78FB41",

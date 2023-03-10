@@ -1,28 +1,48 @@
 const Mustache = require('mustache');
 const fs = require('fs');
-const { saveToFile } = require('./files');
+const { saveToFile, reRootPath } = require('./auxiliary');
+const { loadJson, queryJson } = require('./jsonHandler')
 
-const templateFilePath = './templates/CreateDatabase.mst';
-const modelFilePath = './model/example-source.json';
+// const templateFilePath = './templates/CreateDatabase.mst';
+// const modelFilePath = './model/example-source.json';
 const outFilePath = './out/result.txt';
 
-//Loads file from a path.
-//Used for loading the template and model files.
-async function loadFile(filePath: string): Promise<string> {
-  return await fs.promises.readFile(filePath, 'utf8');
-};
+var cliArguments = process.argv;
 
 //Given a model and a template we parse a mustache template
 //We are using a wrapper to decouple template engine from generation later.
-function parseTemplate(template : string, model: Object): string {
-    return Mustache.render(template, model);
+function parseTemplate(template: string, model: Object): string {
+  return Mustache.render(template, model);
 };
 
-async function runGenerate() {
-  let template = await loadFile(templateFilePath);
-  let model = JSON.parse(await loadFile(modelFilePath));
-  
+async function generateFromTemplate(template: string, modelFilePath: string) {
+  let model = JSON.parse(await loadJson(modelFilePath));
   saveToFile(outFilePath, parseTemplate(template, model));
 };
 
-runGenerate();
+async function cliCfgRunGenerate(cliArgs: string[]) {
+  for(const argument of cliArguments)
+    console.log("arg: " + argument);
+  const cfgPath = `./configs/${cliArguments[2]}`;
+  const configJson = await loadJson(cfgPath);
+
+  // console.log('json: ' + JSON.stringify(configJson));
+  /*
+  // Deze moet vanuit de config folder of config file ??? denken. Aanpassen in de config.json
+  */
+  const modelPathIn = queryJson(configJson, '$.generate.forModel');
+
+
+  console.log('queryResult: ' + modelPathIn);
+  // const pathToLoadFrom = `./models/${modelPath}`;
+  // console.log(pathToLoadFrom);
+  // const modelJson = await loadJson(pathToLoadFrom);
+  // console.log(modelJson);
+
+  const modelJson = await loadJson(reRootPath(modelPathIn[0]) );
+  const modelIterationJsonPath = queryJson(configJson, 'generate/forModelNodePaths');
+  console
+  // const resultsArray = jsonP({path: modelIterationJsonPath, modelJson});
+};
+
+cliCfgRunGenerate(cliArguments);
