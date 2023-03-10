@@ -26,19 +26,10 @@ async function cliCfgRunGenerate(cliArgs: string[]) {
   const cfgPath = `./configs/${cliArguments[2]}`;
   const configJson = await loadJson(cfgPath);
 
-  // console.log('json: ' + JSON.stringify(configJson));
-  /*
-  // Deze moet vanuit de config folder of config file ??? denken. Aanpassen in de config.json
-  */
+  // Deze moet vanuit de config folder of config file denken.
+  // Assumption: config file and model file have same relative positions (logic is in rerootpath)
   const modelPathIn = queryJson(configJson, '$.generate.forModel');
-
-
-  console.log('queryResult: ' + modelPathIn);
-  // const pathToLoadFrom = `./models/${modelPath}`;
-  // console.log(pathToLoadFrom);
-  // const modelJson = await loadJson(pathToLoadFrom);
-  // console.log(modelJson);
-
+  
   const modelJson = await loadJson(reRootPath(modelPathIn[0]) );
   const modelIterationJsonPath = queryJson(configJson, 'generate/forModelNodePaths');
   console
