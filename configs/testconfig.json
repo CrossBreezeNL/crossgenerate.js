@@ -4,11 +4,9 @@
         "forModelNodePaths":[
             {
                 "modelJsonPath":"system.tables.*",
-                "elementName": "table",
                 "templates":[
                         { "outputNameFormat": "tbl_{{table.name}}.sql", "inputTemplate": "CreateView.mst" },
                         { "outputNameFormat": "vw_{{table.name}}.sql", "inputTemplate": "CreateTable.mst" }
-                        
                 ]
             },
             {

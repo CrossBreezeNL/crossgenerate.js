@@ -1,3 +1,5 @@
 --Create Database 
 CREATE DATABASE {{system.name}};
+COLUMN {{ system.entities.iteratedElement }}
+SUM {{ price }} AS
 GO

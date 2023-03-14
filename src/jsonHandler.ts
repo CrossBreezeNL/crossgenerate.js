@@ -1,8 +1,9 @@
-const fs = require('fs');
+import fs from 'fs';
 // const jp = require('jsonpath');
-const { JSONPath: jsonP } = require('jsonpath-plus');
+import { JSONPath as jsonP } from 'jsonpath-plus';
 
-function queryJson(data: object, targetPath: string, logResult = false): string[] {
+function queryJson(data: JSON, targetPath: string, logResult = false): string[] {
+  // path: $.generate.forModel
   const result = jsonP({ path: targetPath, json: data });
   if (logResult)
     console.log(result);
@@ -23,7 +24,12 @@ async function loadJson(filePath: string, logResult = false): Promise<JSON> {
     console.error(error);
     return JSON.parse("{}");
   }
-};
+}
 
-exports.queryJson = queryJson;
-exports.loadJson = loadJson;
+async function loadJsonString(filePath: string, logResult = false): Promise<string> {
+  return JSON.stringify(await loadJson(filePath));
+}
+
+export {
+  queryJson, loadJson, loadJsonString
+}
